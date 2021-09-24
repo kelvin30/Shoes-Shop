@@ -1,5 +1,6 @@
 package com.beans;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class User {
@@ -10,6 +11,7 @@ public class User {
 	private String username;
 	private String password;
 	private String address;
+        private String phone;
 	
 	public int getId() {
 		return id;
@@ -26,6 +28,14 @@ public class User {
 	public String getEmail() {
 		return email;
 	}
+
+        public String getPhone() {
+        return phone;
+        }
+
+        public void setPhone(String phone) {
+        this.phone = phone;
+       }
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -68,7 +78,15 @@ public class User {
 		}
 		return "";
 	}
+	public Object fetchphone(ArrayList<User> userList, String username) {
+		for(User u : userList) {
+			if(u.getUsername().equals(username))
+				return u.getPhone();
 	
-	
-	
+                }
+                return "";
+         } 
+
+      
+        
 }

@@ -16,7 +16,10 @@
 	</c:forEach>
 
 <header>
-		<h1>
+		
+         <h2>Contact +3552264553</h2>
+    
+                <h1>
 			Shoes Shop
 		</h1>
 		<nav>
@@ -25,18 +28,53 @@
 				<c:choose>
 					<c:when test="${session == null}">
 						<li><a href="Controller?page=login">Login</a></li>
-						<li><a href="Controller?page=sign-up">Sign up</a></li>
+						<li><a href="Controller?page=sign-up">Create Account</a></li>
 					</c:when>
 					<c:when test="${session != null}">
 						<li><a href="Controller?page=logout" style="color: #F24638;">Logout</a></li>
 						<li><a href="#">My Account</a></li>
 					</c:when>
 				</c:choose>
-				<li><a href="Controller?page=showcart">cart<c:out value="${x}"/></a></li>
+				<li><a href="Controller?page=showcart">Products in cart <c:out value="${x}"/></a></li>
 			</ul>
 		</nav>
 	</header>
 	
+                        
+                        <style>
+                            
+                            body{
+                                
+                               background-image: url(img/userlogin.jpg);                           
+                               background-size: cover;
+                            }
+                            form{
+                              width: 448px;
+                              height: 654px;
+                              background: rgba(0, 0, 0, 0.5);
+                              color: #fff;
+                              top: 75%;
+                              left: 50%;
+                              position: absolute;
+                              transform: translate(-50%,-50%);
+                              box-sizing: border-box;
+                              padding: 30px 30px;
+                              }
+                              
+                              form h2{
+                                  
+                                  float: top;
+                                  font-size: 20px;
+                                  border-bottom: 6px solid #1c8adb;
+                                  margin-bottom: 70px;
+                                  margin: 18%;
+                                  padding: 20px 0;
+                                  
+}
+                            
+                        </style>
+                        
+                        
 	<div class="signup-header">
 	 	<h2>Sign up here</h2>
 	 </div>
@@ -45,7 +83,7 @@
 	 
 	 <input type="hidden" name="page" value="sign-up-form">
 	 
-	 	<!-- Validations errors -->
+	 	
 	 	<font color="#F24638"><c:out value="${msg }"></c:out></font>
 	 	
 	 	
@@ -66,20 +104,24 @@
 	 		<label>Address</label>
 	 		<input type="text" name="address" placeholder="Address" value="<c:out value="${address }"></c:out>" required>
 	 	</div>
+                <div class="signup-group">
+	 		<label>Phone number</label>
+                        <input type="tel" name="phone" placeholder="Phone number" value="<c:out value="${phone }"></c:out>" required>
+	 	</div>
 	 	<div class="signup-group">
 	 		<label>Password</label>
 	 		<input type="password" name="password_1" placeholder="Enter password" required>
 	 	</div>
 	 	<div class="signup-group">
-	 		<label>Confirm Passowrd</label>
+	 		<label>Confirm Password</label>
 	 		<input type="password" name="password_2" placeholder="Config password" required>
 	 	</div>
 	 	
 	 	<div class="signup-group">
-	 		<button type="submit" name="Register" class="signup-btn">Register</button>
+	 		<button type="submit" name="Register" class="signup-btn">Create Account</button>
 	 	</div>
 	 	<p>
-	 		Already have an account? <a href="Controller?page=login" style="color:#F24638;">Login!</a>
+	 		Already have an account? <a href="Controller?page=login" style="color:blue;">Login!</a>
 	 	</p>
 	 </form>
 	<br><br><br>

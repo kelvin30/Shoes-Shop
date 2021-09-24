@@ -3,6 +3,7 @@ package com.beans;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 public class Product implements Comparable<Product> {
 	 
@@ -11,7 +12,16 @@ public class Product implements Comparable<Product> {
 	private String price;
 	private String category;
 	private String image;
-	
+        private String size;
+	  
+        public String  getSize() {
+        return size;
+    }
+
+    
+    public void setSize(String size) {
+        this.size = size;
+    }
         
         public int getId() {
 		return id;
@@ -20,7 +30,7 @@ public class Product implements Comparable<Product> {
 		this.id = id;
 	}
 	public String getName() {
-		return name;
+            return name;
 	}
 	public void setName(String name) {
 		this.name = name;
@@ -28,6 +38,8 @@ public class Product implements Comparable<Product> {
 	public String getPrice() {
 		return price;
 	}
+
+        
 	public void setPrice(String price) {
 		this.price = price;
 	}
@@ -46,7 +58,7 @@ public class Product implements Comparable<Product> {
 	}
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", price=" + price + ", category=" + category + ", image=" + image + "]";
+		return "Product [id=" + id + ", name=" + name + ", price=" + price + ", category=" + category + ", image=" + image + ", size" +size+"]";
 	}
 	public boolean check(ArrayList<String> cartlist, String id2) {
 		for(String id : cartlist) {
@@ -79,7 +91,13 @@ public class Product implements Comparable<Product> {
 		Collections.sort(list, new Temp());
 		return list;
 	}
+
+    
 	
+
+
+
+
 }
 
 

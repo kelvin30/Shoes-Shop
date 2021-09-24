@@ -11,6 +11,10 @@ import javax.swing.JOptionPane;
 
 import com.beans.Product;
 import com.model.DB;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AdminController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -27,7 +31,7 @@ public class AdminController extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String page = request.getParameter("page");
-		if(page.equals("admin-login-form")) {
+                if(page.equals("admin-login-form")) {
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
 			
@@ -44,6 +48,25 @@ public class AdminController extends HttpServlet {
 			}
 		}
 		
+                
+   
+                
+                
+                if(page.equals("orders")){
+                    String deleteid = request.getParameter("id");
+                    
+                    DB db = new DB();
+                    try{
+                        db.deleteOrder(deleteid);
+                    } catch (SQLException e) {
+                       e.printStackTrace();
+                    }
+                    
+                    request.getRequestDispatcher("admin/orders.jsp").forward(request, response);
+                }
+                
+                
+                
 		if(page.equals("delete")) {
 			String id = request.getParameter("id");
 			DB db = new DB();
@@ -62,10 +85,16 @@ public class AdminController extends HttpServlet {
 		if(page.equals("index")) {
 			request.getRequestDispatcher("admin/index.jsp").forward(request, response);
 		}
+                if(page.equals("orders")) {
+			request.getRequestDispatcher("admin/orders.jsp").forward(request, response);
+		}
 		
 		if(page.equals("addproduct")) {
 			request.getRequestDispatcher("admin/addProduct.jsp").forward(request, response);
 		}
+                if(page.equals("users")){
+                    request.getRequestDispatcher("admin/users.jsp").forward(request, response);
+                }
 		
 		if(page.equals("edit")) {
 			String id = request.getParameter("id");
@@ -89,12 +118,13 @@ public class AdminController extends HttpServlet {
 			String name = request.getParameter("name");
 			String price = request.getParameter("price");
 			String category = request.getParameter("category");
+                        String size = request.getParameter("size");
 			Product p = new Product();
 			p.setId(Integer.parseInt(id));
 			p.setName(name);
 			p.setPrice(price);
 			p.setCategory(category);
-			
+			p.setSize(size);
 			
 			DB account = new DB();
 			try {
@@ -113,11 +143,13 @@ public class AdminController extends HttpServlet {
 			String price = request.getParameter("price");
 			String category = request.getParameter("category");
 			String image = request.getParameter("image");
+                        String size = request.getParameter("size");
 			Product p = new Product();
 			p.setName(name);
 			p.setPrice(price);
 			p.setCategory(category);
 			p.setImage("img/"+image);
+                        p.setSize(size);
 			
 			DB account = new DB();
 			

@@ -1,5 +1,6 @@
 package com.model;
 
+import com.beans.Order;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -9,13 +10,14 @@ import java.util.ArrayList;
 
 import com.beans.Product;
 import com.beans.User;
+import com.controller.Controller;
 
 
 public class DB {
 	
 	private String username = "root";
 	private String password = "";
-	private String dbName = "myproject";
+	private String dbName = "shoesshopsoftware1";
 	private String url = "jdbc:mysql://localhost:3306/" + dbName;
 	private String driver = "com.mysql.jdbc.Driver";
 	
@@ -49,14 +51,15 @@ public class DB {
 
 	public void addUser(User user) throws SQLException {
 		dbConnect();
-		String sql = "Insert into user(name,email,username,address,password) values(?,?,?,?,?)";
+		String sql = "Insert into user(name,email,username,address,phone,password) values(?,?,?,?,?,?)";
 		PreparedStatement st = con.prepareStatement(sql);
 		
 		st.setString(1, user.getName());
 		st.setString(2, user.getEmail());
 		st.setString(3, user.getUsername());
 		st.setString(4, user.getAddress());
-		st.setString(5, user.getPassword());
+                st.setString(5,user.getPhone());
+		st.setString(6, user.getPassword());
 		
 		
 		st.executeUpdate();
@@ -96,6 +99,7 @@ public class DB {
 			String category= rs.getString("category");
 			String price= rs.getString("price");
 			String image= rs.getString("image");
+                        String size = rs.getString("size");
 			
 			Product p = new Product();
 			p.setCategory(category);
@@ -103,6 +107,7 @@ public class DB {
 			p.setImage(image);
 			p.setName(name);
 			p.setPrice(price);
+                        p.setSize(size);
 			list.add(p);
 			p=null;
 			
@@ -123,6 +128,7 @@ public class DB {
 			String user = rs.getString("username");
 			String email = rs.getString("email");
 			String name = rs.getString("name");
+                        String phone = rs.getString("phone");
 			int id = rs.getInt("id");
 			String password = rs.getString("password");
 			
@@ -131,6 +137,7 @@ public class DB {
 			u.setEmail(email);
 			u.setId(id);
 			u.setName(name);
+                        u.setPhone(phone);
 			u.setUsername(user);
 			u.setPassword(password);
 			userList.add(u);
@@ -152,8 +159,21 @@ public class DB {
 		dbClose();
 		
 	}
-
-	public Product fetchProduct(String id) throws SQLException {
+        public void deleteOrder(String deleteid) throws SQLException{
+         
+            dbConnect();
+            String sql = "Delete from product where id=?";
+            PreparedStatement pstm = con.prepareStatement(sql);
+            pstm.setString(1, deleteid);
+            pstm.executeUpdate();
+            dbClose();
+            
+        }
+        
+       
+        
+        
+        public Product fetchProduct(String id) throws SQLException {
 		dbConnect();
 		String sql = "select * from product where id=?";
 		PreparedStatement pstmt = con.prepareStatement(sql);
@@ -167,6 +187,7 @@ public class DB {
 			p.setPrice(rst.getString("price"));
 			p.setCategory(rst.getString("category"));
 			p.setImage(rst.getString("image"));
+                        p.setSize(rst.getString("size"));
 		}
 		dbClose();
 		return p;
@@ -174,32 +195,45 @@ public class DB {
 
 	public void updateProduct(Product p) throws SQLException {
 		dbConnect();
-		String sql = "update product set name=?,price=?,category=? where id=?";
+		String sql = "update product set name=?,price=?,category=?,size=? where id=?";
 		PreparedStatement st = con.prepareStatement(sql);
 		st.setString(1, p.getName());
 		st.setString(2, p.getPrice());
 		st.setString(3, p.getCategory());
-		st.setInt(4, p.getId());
+                st.setString(4, p.getSize());
+		st.setInt(5, p.getId());
 		st.executeUpdate();
 		dbClose();
 	}
 
 	public void addProduct(Product p) throws SQLException {
 		dbConnect();
-		String sql = "Insert into product(name,price,category,image) values(?,?,?,?)";
+		String sql = "Insert into product(name,price,category,image,size) values(?,?,?,?,?)";
 		PreparedStatement st = con.prepareStatement(sql);
 		
 		st.setString(1, p.getName());
 		st.setString(2, p.getPrice());
 		st.setString(3, p.getCategory());
 		st.setString(4, p.getImage());
-		
+		st.setString(5, p.getSize());
 		
 		st.executeUpdate();
 		dbClose();
 	}
 
-	
-	
+	public void addOrder(String username,String prodId)throws SQLException{
+            dbConnect();
+            String sql = "INSERT INTO `orders`(`user`, `product_id`) VALUES ('"+username+"','"+prodId+"')";
+            PreparedStatement st = con.prepareStatement(sql);
+          /*  
+            st.setString(1, username);
+            st.setString(2, prodId);
+            */
+            st.executeUpdate();
+            dbClose();
+            
+        }
+    
+        
 	
 }

@@ -1,6 +1,6 @@
 @charset "ISO-8859-1";
 
-/* login-signup */
+
 
 * {
   margin: 0px;
@@ -9,7 +9,8 @@
 
 
 .signup-header {
-  width: 30%;
+  
+  width: 31.5%;
   margin: 50px auto 0px;
   color: white;
   background: #6495ED;
@@ -17,12 +18,13 @@
   border: 1px solid #B0C4DE;
   border-bottom: none;
   border-radius: 10px 10px 0px 0px;
-  padding: 20px;
+  padding: 10px;
+  padding-bottom: 38px;
 
 }
 
-form, .content {
-  width: 30%;
+form {
+  width: 31.5%;
   margin: 0px auto;
   padding: 20px;
   border: 1px solid #B0C4DE;
@@ -54,10 +56,15 @@ form, .content {
   background: dodgerblue;
   border: none;
   border-radius: 5px;
-  margin-left: 40%;
+  margin-left: 30%;
 }
 
-
+.signup-btn:hover{
+    
+    background-color: #00cc33;
+    transition: 0.5s;
+    
+}
 
 /* Navbar */
 
@@ -80,7 +87,16 @@ h2{
     position: absolute;
     margin-left: 20px;
     margin-top: -10px;
+    padding-top: 20px;
     color: black;
+    
+}
+
+#all-shoes{
+    
+    text-align: center; 
+    margin-left: 450px;
+    padding-top: 1px;
     
 }
 
@@ -104,7 +120,7 @@ a{
 }
 
 a:hover {
-	color: red;
+	color: black;
 	transition: 0.5s;
 }
 
@@ -122,19 +138,19 @@ a:hover {
 
 
 /* cart */
-table th{
+/*table th{
 	text-align: left;
 	background-color: #6495ED;
 	color: white;
 	padding: 4px 30px 4px 8px;
-}
-
+}*/
+/*
 table td{
 	border: 1px solid black;
-	padding: 4px 8px;
+	padding: 4px 6px;
 }
-
-table {
+*/
+/*table {
 	border-collapse: collapse;
 	width: 100%;
 	margin-top: 30px;
@@ -148,7 +164,7 @@ table {
   display: inline-block;
   margin: 5px;
   padding: 10px;
-}
+
 
 .column {
   
@@ -163,29 +179,46 @@ table {
 }
 
 
-#head{
-    
-     position: absolute;
-    margin-left: 20px;
-    margin-top: 15px;
-    color: black;
-    
-}
 
-#product{
-    
-    margin-top: 1px;
-    
-}
+
+
 .btn-primary:hover{
     
-    background-color: red;
+    background-color: #00cc33;
     transition: 0.5s;
     
 }
+.btn btn-outline-primary{
+    
+    position: absolute;
+    padding: 20px;
+    margin-left: 10px;
+    
+    
+}
+
+
 tr:hover {
     
     background-color: #5F9EA0;
     transition: 0.8s;
     
 }
+.row{
+    
+    padding-left: 10px;
+    margin-left: 20px;
+    margin-bottom: 10px;
+     
+    
+}
+.text-center{
+    
+    position: relative;
+    size: landscape;
+    
+}
+
+
+
+

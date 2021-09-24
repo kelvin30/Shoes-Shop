@@ -43,6 +43,10 @@
 	 		<label>Price</label>
 	 		<input type="text" name="price" value="<c:out value="${p.getPrice() }"></c:out>" required>
 	 	</div>
+                <div class="signup-group">
+	 		<label>Size</label>
+	 		<input type="text" name="size" value="<c:out value="${p.getSize() }"></c:out>" required>
+	 	</div>
 	 	<div class="signup-group">
 	 		<label>Category</label>
 	 		<input type="text" name="category" value="<c:out value="${p.getCategory() }"></c:out>" required>

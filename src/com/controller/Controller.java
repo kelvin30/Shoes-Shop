@@ -1,5 +1,6 @@
 package com.controller;
 
+import com.beans.Order;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -14,13 +15,20 @@ import javax.swing.JOptionPane;
 import com.beans.Product;
 import com.beans.User;
 import com.model.DB;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	ArrayList<Product> list = new ArrayList<>();
+        ArrayList<Product> list = new ArrayList<>();
 	static ArrayList<String> cartlist = new ArrayList<>();
 	ArrayList<User> userList = new ArrayList<>();
 	HttpSession session;
+        
+        public String getSession(){
+           return session.getAttribute("username").toString();
+        }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String page = request.getParameter("page");
@@ -53,12 +61,30 @@ public class Controller extends HttpServlet {
 		if(page.equals("sign-up")) {
 			request.getRequestDispatcher("signup.jsp").forward(request, response);
 		}
-		
+		/*
+                if(page.equals("addorder")){
+                    String name = request.getParameter("name");
+                    String id = request.getParameter("id");
+                    
+                    Order order = new Order();
+                    order.setUser(name);
+                    order.setProduct(id);
+                    
+                    DB db = new DB();
+                    try{
+                        db.addOrder(u, p);
+                    }catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+                }
+                */
 		if(page.equals("sign-up-form")) {
 			String name = request.getParameter("name");
 			String email = request.getParameter("email");
 			String username = request.getParameter("username");
 			String address = request.getParameter("address");
+                        String phone = request.getParameter("phone");
 			String password_1 = request.getParameter("password_1");
 			String password_2 = request.getParameter("password_2");
 			
@@ -68,6 +94,7 @@ public class Controller extends HttpServlet {
 				user.setAddress(address);
 				user.setEmail(email);
 				user.setName(name);
+                                user.setPhone(phone);
 				user.setUsername(username);
 				user.setPassword(password_1);
 				
@@ -81,14 +108,15 @@ public class Controller extends HttpServlet {
 				
 				
 				request.setAttribute("username", username);
-				request.setAttribute("msg", "Account created successfully, Please Login!");
+				request.setAttribute("msg", "Account created successfully, now you can login!");
 				request.getRequestDispatcher("login.jsp").forward(request, response);
 				
 			}else {
-				request.setAttribute("msg", "The two passwords do not match");
+				request.setAttribute("msg", "Passwords entered do not match");
 				request.setAttribute("name", name);
 				request.setAttribute("address", address);
 				request.setAttribute("email", email);
+                                request.setAttribute("phone",phone);
 				request.setAttribute("username", username);
 				request.getRequestDispatcher("signup.jsp").forward(request, response);
 			}
@@ -122,9 +150,10 @@ public class Controller extends HttpServlet {
 				session.setAttribute("email", user.fetchemail(userList,username));
 				session.setAttribute("name", user.fetchname(userList,username));
 				session.setAttribute("username", username);
+                                session.setAttribute("phone",user.fetchphone(userList, username));
 				request.getRequestDispatcher("index.jsp").forward(request, response);
 			}else {
-				request.setAttribute("msg", "Invalid Crediantials");
+				request.setAttribute("msg", "Invalid Username or Password");
 				request.setAttribute("username", username);
 				request.getRequestDispatcher("login.jsp").forward(request, response);
 			}
@@ -167,15 +196,15 @@ public class Controller extends HttpServlet {
 		
 		if(page.equals("addtocart")) {
 			String id = request.getParameter("id");
-			String action = request.getParameter("action");
+                        String action = request.getParameter("action");
 			Product p = new Product();
 			boolean check = p.check(cartlist,id);
 			
 			if(check)
-				JOptionPane.showMessageDialog(null, "Product is already added to Cart", "Info", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Product is already on your cart", "Sorry", JOptionPane.INFORMATION_MESSAGE);
                         else  {
 			cartlist.add(id);
-			JOptionPane.showMessageDialog(null, "Product successfully added to Cart", "Info", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Product added to your cart", "Success", JOptionPane.INFORMATION_MESSAGE);
 			}
                         
 			
@@ -187,14 +216,50 @@ public class Controller extends HttpServlet {
 		}
 		
 		if(page.equals("success")) {
+	            session = request.getSession();
+                    String prodId = request.getParameter("prod_id");
+                    session = request.getSession();
+                    String username = (String)request.getSession().getAttribute("username");
+                    
+                    DB db = new DB();
+                    try {
+                        db.addOrder(username, prodId);
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
 			
-			request.getRequestDispatcher("success.jsp").forward(request, response);
+                        request.getRequestDispatcher("success.jsp").forward(request, response);
 			
 			/*session = request.getSession();
 			 cartlist.clear();
 			 session.setAttribute("cartlist", cartlist);*/
+                        
+                      
 		}
-		
+		/*
+                if(page.equals("success-btn")) {
+                
+                        String name = request.getParameter("name");
+			String product = request.getParameter("product");
+			String address = request.getParameter("address");
+			Order o = new Order();
+			request.getParameter(name);
+			request.getParameter(product);
+			request.getParameter(address);
+			
+			
+			DB db = new DB();
+			
+                            try{
+			         db.addOrder(o);
+			 }catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+                    
+                }
+                */
+                
 		if(page.equals("remove")) {
 			String id = request.getParameter("id");
 			Product p = new Product();
@@ -224,4 +289,5 @@ public class Controller extends HttpServlet {
 		}
 	}
 
+        
 }

@@ -44,6 +44,10 @@
 	 		<label>Price</label>
 	 		<input type="text" name="price" placeholder="Product Price" required>
 	 	</div>
+                <div class="signup-group">
+	 		<label>Size</label>
+	 		<input type="text" name="size" placeholder="Product Size" required>
+	 	</div>
 	 	<div class="signup-group">
 	 		<label>Category</label>
 	 		<input type="text" name="category" placeholder="Product Category" required>

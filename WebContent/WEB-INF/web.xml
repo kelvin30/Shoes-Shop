@@ -23,5 +23,5 @@
   <servlet-mapping>
     <servlet-name>AdminController</servlet-name>
     <url-pattern>/admin</url-pattern>
-  </servlet-mapping>
+   </servlet-mapping>
 </web-app>
